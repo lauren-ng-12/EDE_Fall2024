@@ -43,9 +43,11 @@ class(vector1)
 
 vector2 <- c("one","two","three") # Vector type: 
 vector2
+class(vector2)
 
 vector3 <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) # Vector type:
 vector3
+class (vector3)
 ```
 
 ### Vector Operations
