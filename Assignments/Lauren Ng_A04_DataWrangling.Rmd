@@ -142,7 +142,7 @@ write.csv(EPA.air.PM25.2019.AQI, row.names = FALSE, file = "./Data/Processed/EPA
 11. Save your processed dataset with the following file name: "EPAair_O3_PM25_NC1819_Processed.csv"
 
 ```{r questions 7 thru 11}
-#7 
+#7 Combine datasets with rbind
 EPA.O3.2018 <- read.csv("./Data/Processed/EPAair_O3_NC2018_processed.csv")
 EPA.O3.2019 <- read.csv("./Data/Processed/EPAair_O3_NC2019_processed.csv")
 EPA.PM25.2018 <- read.csv("./Data/Processed/EPAair_PM25_NC2018_processed.csv")
@@ -151,15 +151,15 @@ EPA.PM25.2019 <- read.csv("./Data/Processed/EPAair_PM25_NC2019_processed.csv")
 EPA.2018.2019 <- rbind(EPA.O3.2018,EPA.O3.2019,EPA.PM25.2018,EPA.PM25.2019)
 
 
-#8 
+#8 Wrangle data for common sites
 EPA.summaries <-
   EPA.2018.2019 %>%
-  filter(Site.Name == "Linville Falls", Site.Name=="Durham Armory", 
-         Site.Name=="Leggett", Site.Name =="Hattie Avenue", 
-         Site.Name=="Clemmons Middle",Site.Name=="Mendenhall School", 
-         Site.Name=="Frying Pan Mountain", Site.Name=="West Johnston Co.",
-         Site.Name== "Garinger High School", Site.Name=="Castle Hayne", 
-         Site.Name=="Pitt Agri. Center",Site.Name== "Bryson City", 
+  filter(Site.Name == "Linville Falls"| Site.Name=="Durham Armory"| 
+         Site.Name=="Leggett"| Site.Name =="Hattie Avenue"| 
+         Site.Name=="Clemmons Middle"|Site.Name=="Mendenhall School"| 
+         Site.Name=="Frying Pan Mountain"| Site.Name=="West Johnston Co."|
+         Site.Name== "Garinger High School"| Site.Name=="Castle Hayne"| 
+         Site.Name=="Pitt Agri. Center"|Site.Name== "Bryson City"| 
          Site.Name=="Millbrook School") %>%
   group_by(Date,Site.Name,AQS_PARAMETER_DESC,COUNTY)%>%
   filter(!is.na(Site.Name))%>%
@@ -167,18 +167,22 @@ EPA.summaries <-
             meanlat = mean(SITE_LATITUDE), 
             meanlong = mean(SITE_LONGITUDE))
 
+#Make date column into date object again
+EPA.2018.2019$Date <- mdy(EPA.2018.2019$Date)
+
+#Create columns for month and year
 EPA.2018.2019<- mutate(EPA.2018.2019, month = month(Date))
 EPA.2018.2019<- mutate(EPA.2018.2019, year = year(Date))
 
-#9
+#9 Create new column for ozone and PM2.5
 EPA.2018.2019.gathered <-EPA.2018.2019%>% 
   pivot_wider(names_from = AQS_PARAMETER_DESC,
               values_from = DAILY_AQI_VALUE
 )
-#10
+#10 
 dim(EPA.2018.2019.gathered)
 
-#11
+#11 Save processed data
 write.csv(EPA.2018.2019.gathered, row.names = FALSE, file = "./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
 
 ```
@@ -203,7 +207,7 @@ EPA.gathered.summaries <-
 #13
 dim(EPA.gathered.summaries)
 
-#I don't know why my summary tables are showing no values. 
+ 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`? Hint: replace `drop_na` with `na.omit` in part 12 and observe what happens with the dimensions of the summary date frame.
