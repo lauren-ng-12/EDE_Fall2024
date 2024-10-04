@@ -168,22 +168,21 @@ EPA.summaries <-
             meanlong = mean(SITE_LONGITUDE))
 
 #Make date column into date object again
-EPA.2018.2019$Date <- mdy(EPA.2018.2019$Date)
+EPA.summaries$Date <- ymd(EPA.summaries$Date)
 
 #Create columns for month and year
-EPA.2018.2019<- mutate(EPA.2018.2019, month = month(Date))
-EPA.2018.2019<- mutate(EPA.2018.2019, year = year(Date))
+EPA.summaries<- mutate(EPA.summaries, month = month(Date))
+EPA.summaries<- mutate(EPA.summaries, year = year(Date))
 
 #9 Create new column for ozone and PM2.5
-EPA.2018.2019.gathered <-EPA.2018.2019%>% 
+EPA.summaries <-EPA.summaries%>% 
   pivot_wider(names_from = AQS_PARAMETER_DESC,
-              values_from = DAILY_AQI_VALUE
+              values_from = meanAQI
 )
 #10 
-dim(EPA.2018.2019.gathered)
+dim(EPA.summaries)
 
-#11 Save processed data
-write.csv(EPA.2018.2019.gathered, row.names = FALSE, file = "./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
+write.csv(EPA.summaries, file = here("./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv"))
 
 ```
 
@@ -197,20 +196,21 @@ write.csv(EPA.2018.2019.gathered, row.names = FALSE, file = "./Data/Processed/EP
 ```{r questions 12 and 13}
 
 #12
-EPA.gathered.summaries <-
-  EPA.2018.2019.gathered %>%
+EPA.summaries.df <-
+  EPA.summaries %>%
   group_by(Site.Name,month,year)%>%
   summarise(mean_ozone = mean(Ozone),
             mean_PM = mean(PM2.5))%>%
   drop_na(mean_ozone)
 
 #13
-dim(EPA.gathered.summaries)
+dim(EPA.summaries.df)
 
  
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`? Hint: replace `drop_na` with `na.omit` in part 12 and observe what happens with the dimensions of the summary date frame.
 
-> Answer: 
+> Answer: When we use drop_na, it retains the number of rows. But with na.omit,
+it deleted the rows with na, so the number of rows decreased.
 
