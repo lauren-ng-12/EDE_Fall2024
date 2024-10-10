@@ -89,27 +89,61 @@ EPA.air.PM25.2018$Date <- mdy(EPA.air.PM25.2018$Date)
 EPA.air.PM25.2019$Date <- mdy(EPA.air.PM25.2019$Date)
 
 #4
-EPA.air.O3.2018.AQI <- select(EPA.air.O3.2018,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA.air.O3.2018.AQI <- select(EPA.air.O3.2018,
+                              Date, 
+                              DAILY_AQI_VALUE, Site.Name, 
+                              AQS_PARAMETER_DESC, COUNTY, 
+                              SITE_LATITUDE, 
+                              SITE_LONGITUDE)
 
-EPA.air.O3.2019.AQI <- select(EPA.air.O3.2019,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA.air.O3.2019.AQI <- select(EPA.air.O3.2019,
+                              Date, 
+                              DAILY_AQI_VALUE, 
+                              Site.Name, 
+                              AQS_PARAMETER_DESC, 
+                              COUNTY, 
+                              SITE_LATITUDE, 
+                              SITE_LONGITUDE)
 
-EPA.air.PM25.2018.AQI <- select(EPA.air.PM25.2018,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA.air.PM25.2018.AQI <- select(EPA.air.PM25.2018,
+                                Date, 
+                                DAILY_AQI_VALUE, 
+                                Site.Name, 
+                                AQS_PARAMETER_DESC, 
+                                COUNTY, SITE_LATITUDE, 
+                                SITE_LONGITUDE)
 
-EPA.air.PM25.2019.AQI <- select(EPA.air.PM25.2019,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
-
+EPA.air.PM25.2019.AQI <- select(EPA.air.PM25.2019,
+                                Date, 
+                                DAILY_AQI_VALUE, 
+                                Site.Name, 
+                                AQS_PARAMETER_DESC, 
+                                COUNTY, 
+                                SITE_LATITUDE, 
+                                SITE_LONGITUDE)
 
 #5
-EPA.air.PM25.2018.AQI <- mutate(EPA.air.PM25.2018.AQI, AQS_PARAMETER_DESC = "PM2.5")
-EPA.air.PM25.2019.AQI <- mutate(EPA.air.PM25.2019.AQI, AQS_PARAMETER_DESC = "PM2.5")
+EPA.air.PM25.2018.AQI <- mutate(EPA.air.PM25.2018.AQI, 
+                                AQS_PARAMETER_DESC = "PM2.5")
+EPA.air.PM25.2019.AQI <- mutate(EPA.air.PM25.2019.AQI, 
+                                AQS_PARAMETER_DESC = "PM2.5")
 
 #6
-write.csv(EPA.air.O3.2018.AQI, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
+write.csv(EPA.air.O3.2018.AQI, 
+          row.names = FALSE, 
+          file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
 
-write.csv(EPA.air.O3.2019.AQI, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2019_processed.csv")
+write.csv(EPA.air.O3.2019.AQI, 
+          row.names = FALSE, 
+          file = "./Data/Processed/EPAair_O3_NC2019_processed.csv")
 
-write.csv(EPA.air.PM25.2018.AQI, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
+write.csv(EPA.air.PM25.2018.AQI, 
+          row.names = FALSE, 
+          file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
 
-write.csv(EPA.air.PM25.2019.AQI, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2019_processed.csv")
+write.csv(EPA.air.PM25.2019.AQI, 
+          row.names = FALSE, 
+          file = "./Data/Processed/EPAair_PM25_NC2019_processed.csv")
 ```
 
 
