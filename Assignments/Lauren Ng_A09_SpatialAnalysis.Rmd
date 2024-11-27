@@ -254,18 +254,16 @@ gage_in_lancaster <- gage_utm[unlist(st_within(gage_utm, lancaster_county, spars
 #24 Spatially select gages within 15 k of the selected county
 
 buffer_15km <- st_buffer(lancaster_county, dist = 15000)
-gage_within_15km <- gage_utm[unlist(st_within(gage_utm, buffer_15km, sparse=TRUE))]
-
-
-
+gage_within_15km <- gage_utm[unlist(st_intersects(gage_utm, buffer_15km, sparse=TRUE))]
 
 
 #25 Plot
 LancasterGagesMap <- ggplot()+
   geom_sf(data = counties_utm, fill = "white",color="black",size=0.2)+
   geom_sf(data = lancaster_county, fill = "lightblue", color = "blue", size = 0.5) +  
-  geom_sf(data = gage_in_lancaster, aes(size = 2), color = "red")+
-  geom_sf(data = gage_within_15km, aes( size = 2), color= "green")
+  geom_sf(data = gage_within_15km, aes( size = 1), color= "green")+
+  geom_sf(data = gage_in_lancaster, aes(size = 1), color = "red")
+  
  
 LancasterGagesMap
 ```
